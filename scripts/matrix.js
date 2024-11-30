@@ -44,9 +44,9 @@ class Matrix {
   }
 
   setScale = function(x, y, z) {
-    this.#scale.x *= x;
-    this.#scale.y *= y;
-    this.#scale.z *= z;
+    this.#scale.x = x;
+    this.#scale.y = y;
+    this.#scale.z = z;
   }
 
   setPosition = function(x, y, z) {

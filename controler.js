@@ -116,7 +116,8 @@ class Control {
     $(".control").show();
 
     let div = document.querySelector('.imgs-controll');
-    div.style.display = 'flex';
+    //div.style.display = 'flex';
+    div.style.display = 'none';
 
     setTimeout(() => {
       div.style.display = 'none';
@@ -176,7 +177,7 @@ class Control {
       }
     })
 
-    //addicionar evenetos
+    //addicionar eventos
     $(document).on({
       keydown: (e) => this.#keydown(e),
       keyup: (e) => this.#keyup(),
@@ -209,7 +210,6 @@ class Control {
 
 
     //função arrasta e solta
-
     $('.modal-item').on('dragstart', (ev) => {
       ev.originalEvent.dataTransfer.setData("item", ev.target.id);
     })
@@ -249,7 +249,7 @@ class Control {
 
     })
 
-    // fin da função arrasta e solta
+    // fim da função arrasta e solta
 
 
 
@@ -367,7 +367,7 @@ class Control {
     x = (x < -10) ? -10 : (x > 10) ? 10 : x;
     y = (y < -10) ? -10 : (y > 10) ? 10 : y;
 
-    let vel = 0.008;
+    let vel = 0.001;
     this.rotate = { x: y * -c * vel, y: x * vel, z: y * s * vel };
     let cam = scene.getCamera();
     window.localStorage.setItem('scene_lookat', JSON.stringify({ lookat: cam.getLookat(), data: cam.getData() }));

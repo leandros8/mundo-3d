@@ -1,0 +1,129 @@
+.slide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 320px;
+  background: #fff;
+  color: #000;
+  padding: 3px;
+  overflow-y: scroll;
+}
+
+.title {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 5px;
+}
+
+.link {
+  color: #00f;
+}
+
+.slide hr {
+  border-color: rgb(12, 12, 12);
+}
+
+div.type {
+  display: flex;
+  justify-content: space-around;
+  margin: 5px 0;
+}
+
+div.type label {
+  outline: none;
+  color: #000;
+  font-weight: 400;
+  padding: 2px 6px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+
+div.type label.active {
+  background: #111;
+  color: #fff;
+}
+
+div.type label input {
+  display: none;
+}
+
+.point-position {
+  display: flex;
+  justify-content: space-around;
+  font-weight: bold;
+  color: #333;
+}
+
+.point-position label input,
+.point-position select {
+  width: 50px;
+  height: 24px;
+  padding: 4px 0px;
+  border-radius: 7px;
+  outline: none;
+  border: 1px solid #999;
+  text-align: center;
+}
+
+button.sav,
+button.add,
+button.del {
+  outline: none;
+  color: #fff;
+  font-weight: 400;
+  padding: 6px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 120px;
+}
+
+.list {
+  display: none;
+}
+
+.list ul {
+  list-style: none;
+  overflow-y: scroll;
+  height: 300px;
+  margin: 10px 0;
+}
+
+.list li {
+  display: flex;
+  justify-content: space-around;
+  background: #4e0277;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.list li.active{
+  background: #000 !important;
+}
+
+.list li span {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  width: fit-content;
+}
+
+.detals{
+  display: none;
+}
+
+.edges-list {
+  display: none;
+}
+
+.polygonus-list{
+  display: block;
+}

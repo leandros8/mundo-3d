@@ -34,16 +34,13 @@ class View {
 
       var style = item.getStyle();
 
-      var coords = item.getCoords();// Util.cloneObject(item.getCoords());
-      /*coords.sort(function(a, b){
-        return (a.z > b.z ? -1 : 1)
-      });*/
+      var coords = item.getCoords();
 
       //search point
       if (style.type == Entity.TYPEPOINTS)
-        for (var j = 0; j < coords.length; ++j) {
-          let coord = coords[j];
-          if (this.context.isPointInPath(coord.path, x, y)) {
+        for (var j = 0; j < coords.points.length; ++j) {
+          let p = coords.points[j];
+          if (this.context.isPointInPath(p.path, x, y)) {
             return {
               type: Entity.TYPEPOINTS,
               entity: item,
@@ -67,8 +64,8 @@ class View {
 
       //search polygonus
       if (style.type == Entity.TYPEPOLYGONUS)
-        for (var j = item.getPolygonus().length - 1; j >= 0; --j) {
-          let poly = item.getPolygonus()[j];
+        for (var j = coords.polygonus.length - 1; j >= 0; --j) {
+          let poly = coords.polygonus[j];
           if (this.context.isPointInPath(poly.path, x, y)) {
             return {
               type: Entity.TYPEPOLYGONUS,
@@ -100,7 +97,8 @@ class View {
     for (var i = 0; i < itens.length; ++i) {
       var item = itens[i];
       if (item.disable) continue;
-      let coords = item.getCoords();
+      let pcoords = item.getCoords().points;
+      let vcoords = item.getCoords().polygonus;
       let style = item.getStyle();
 
       ctx.fillStyle = "rgb(" + style.color + ")";
@@ -108,19 +106,20 @@ class View {
 
       //renderizar points
       if (style.type == Entity.TYPEPOINTS)
-        for (var j = 0; j < coords.length; ++j) {
-          var coord = coords[j];
-          if (coord.z <= 0) continue;
-          var path = coord.path = new Path2D();
-          path.arc(coord.x, coord.y, style.size / (coord.z * 0.2), 0, Math.PI * 2);
+        for (var j = 0; j < pcoords.length; ++j) {
+          var p = pcoords[j];
+          if (p.z <= 0) continue;
+          var path = p.path = new Path2D();
+          path.arc(p.x, p.y, style.size / (p.z * 0.2), 0, Math.PI * 2);
           ctx.fill(path);
+          
         }
 
       //renderizar linhas
       if (style.type == Entity.TYPELINES)
         for (var j = 0; j < item.getEdges().length; ++j) {
           var edge = item.getEdges()[j];
-          var a = coords[edge.a], b = coords[edge.b];
+          var a = pcoords[edge.a], b = pcoords[edge.b];
           if (a.z <= 0 && b.z <= 0) continue;
           var path = edge.path = new Path2D();
           var ind = (a.z + b.z) * 0.5;
@@ -133,16 +132,16 @@ class View {
 
       //renderizar polygonus
       if (style.type == Entity.TYPEPOLYGONUS)
-        for (var j = 0; j < item.getPolygonus().length; ++j) {
+        for (var j = 0; j < vcoords.length; ++j) {
 
-          let poly = item.getPolygonus()[j];
+          let poly = vcoords[j];
           let path = poly.path = new Path2D();
           let vert = poly.vertices;
 
-          var a = coords[vert[0]],
-            b = coords[vert[1]],
-            c = coords[vert[2]],
-            d = coords[vert[3]];
+          var a = pcoords[vert[0]],
+            b = pcoords[vert[1]],
+            c = pcoords[vert[2]],
+            d = pcoords[vert[3]];
 
           if (!style.twoSides && poly.wordCoords.z > 0) continue;
 

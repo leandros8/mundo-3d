@@ -8,9 +8,9 @@
 </head>
 
 <body style="margin:0;overflow: hidden;">
-  <canvas style="background: #333;" id="canvas"></canvas>
+  <canvas style="background: #888;" id="canvas"></canvas>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="jquery-3.7.1.min.js"></script>
   <script src="scripts/util.js"></script>
   <script src="scripts/matrix.js"></script>
   <script src="scripts/entity.js"></script>
@@ -18,7 +18,376 @@
   <script src="scripts/view.js"></script>
   <script src="controler.js"></script>
   <script src="game-textures.js"></script>
-  <script src="game.js"></script>
+  <!--<script src="game.js"></script>-->
+
+
+
+
+
+
+  <div class="slide">
+    <div class='title'>
+      <span class="link">15135</span>
+      <span class="name">Caminhonete</span>
+    </div>
+
+    <hr />
+
+    <form>
+      <div class="type">
+        <label class="active" for="cb1">Detalhes<input checked type="radio" name="view_type" id="cb1" value="1"></label>
+        <label for="cb2">Pontos<input type="radio" name="view_type" id="cb2" value="2"></label>
+      </div>
+      <div class="type">
+        <label for="cb3">Linhas<input type="radio" name="view_type" id="cb3" value="3"></label>
+        <label for="cb4">Polígonos<input type="radio" name="view_type" id="cb4" value="4"></label>
+      </div>
+    </form>
+
+    <div class="list points-list">
+      <ul></ul>
+
+      <div style="display: flex;justify-content: space-around;">
+        <button style="background: #00f;" class="add">Adicionar Ponto</button>
+        <button style="background: #f00;" class="del">Deletar Ponto</button>
+      </div>
+
+      <div class="item-detals points-detals">
+        <span style="display: block;margin: 15px;font-weight: bold;" class="detal-title"></span>
+
+        <form class="point-position">
+          <label for="">
+            X: <input step="0.020" type="number" name="x">
+          </label>
+
+          <label for="">
+            Y: <input step="0.020" type="number" name="y">
+          </label>
+
+          <label for="">
+            Z: <input step="0.020" type="number" name="z">
+          </label>
+
+        </form>
+
+          <button style="background: #0f0;  margin: 15px auto;display: block; width: 200px;" class="sav">Salvar</button>
+      </div>
+
+    </div>
+
+    <div class="list edges-list">
+      <ul>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25ggjj</span>
+        </li>
+        <li>
+          <span>Line 5</span>
+          <span>P:25</span>
+          <span style="background: #fff;height: 2px;"></span>
+          <span>P:25aa</span>
+        </li>
+      </ul>
+
+      <div style="display: flex;justify-content: space-around;">
+        <button style="background: #00f;" class="add">Adicionar Linha</button>
+        <button style="background: #f00;" class="del">Deletar Linha</button>
+      </div>
+
+      <div class="item-detals edges-detals">
+        <span style="display: block;margin: 15px;font-weight: bold;" class="detal-title"></span>
+
+        <form class="point-position">
+          <label for="">
+            A:
+            <select class="edge-item-a">
+            </select>
+          </label>
+
+          <label for="">
+            B:
+            <select class="edge-item-b">
+
+            </select>
+          </label>
+
+        </form>
+
+        <button style="background: #0f0;  margin: 15px auto;display: block; width: 200px;" class="sav">Salvar</button>
+      </div>
+
+    </div>
+
+    <div class="list polygonus-list">
+
+      <ul>
+      </ul>
+
+      <div style="display: flex;justify-content: space-around;">
+        <button style="background: #00f;" class="add">Adicionar Poligono</button>
+        <button style="background: #f00;" class="del">Deletar Poligono</button>
+      </div>
+
+      <div class="item-detals polygonus-detals">
+        <span style="display: block;margin: 15px;font-weight: bold;" class="detal-title"></span>
+
+        <form class="point-position" style="margin-bottom: 10px;">
+          <label for="">
+            A:
+            <select class="polygonus-item-a"></select>
+          </label>
+
+          <label for="">
+            B:
+            <select class="polygonus-item-b"></select>
+          </label>
+        </form>
+
+        <form class="point-position">
+          <label for="">
+            C:
+            <select class="polygonus-item-c"></select>
+          </label>
+
+          <label for="aaa">
+            D:
+            <select class="polygonus-item-d"></select>
+          </label>
+        </form>
+
+        <div class="action-btns">
+          <button class="del-btn">Deletar</button>
+          <button class="sav-btn">Salvar</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="detals">
+      <span style="display: block;margin: 15px;font-weight: bold;" class="">Estilos</span>
+
+      <form class="point-position" style="margin-bottom: 10px;">
+        <label style="display: flex;align-items: center;" for="">
+          Cor: <input style="padding: 0;height: revert;margin-left: 5px;" type="color" id="style-color">
+        </label>
+
+        <label for="">
+          Tamanho: <input step="0.10" id="style-size" type="number">
+        </label>
+      </form>
+
+      <form class="point-position" style="margin-bottom: 10px;">
+
+        <label for="">
+          Tipo: <select style="width: 80px;padding: 0;" id="style-type">
+            <option value="0.002">Pontos</option>
+            <option value="0.005">Linhas</option>
+            <option value="0.009">Polígonos</option>
+          </select>
+        </label>
+
+        <label for="">
+          Brilho: <input step="0.010" id="style-shine" type="number">
+        </label>
+      </form>
+
+      <hr />
+
+      <span style="display: block;margin: 15px;font-weight: bold;" class="">Posição</span>
+
+      <form class="point-position">
+        <label for="">
+          X: <input step="0.10" id="p-x" type="number">
+        </label>
+
+        <label for="">
+          Y: <input step="0.010" id="p-y" type="number">
+        </label>
+
+        <label for="">
+          Z: <input step="0.010" id="p-z" type="number">
+        </label>
+
+      </form>
+
+      <span style="display: block;margin: 15px;font-weight: bold;" class="">Rotação</span>
+
+      <form class="point-position">
+        <label for="">
+          X: <input step="0.0010" type="number" id="r-x">
+        </label>
+
+        <label for="">
+          Y: <input step="0.0010" type="number" id="r-y">
+        </label>
+
+        <label for="">
+          Z: <input step="0.0010" type="number" id="r-z">
+        </label>
+
+      </form>
+
+      <span style="display: block;margin: 15px;font-weight: bold;" class="">Escala</span>
+
+      <form class="point-position">
+        <label for="">
+          X: <input step="0.10" type="number" id="s-x">
+        </label>
+
+        <label for="">
+          Y: <input step="0.10" type="number" id="s-y">
+        </label>
+
+        <label for="">
+          Z: <input step="0.10" type="number" id="s-z">
+        </label>
+
+      </form>
+
+      <div class="action-btns">
+        <button class="del-btn">Deletar</button>
+        <button class="sav-btn">Salvar</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="create.js"></script>
 
 </body>
 

@@ -19,6 +19,7 @@ class Scene {
   addItem = function (item, x, y, z) {
     if (x != null && y != null && z != null) item.setPosition(x, y, z);
     this.#itens.push(item);
+    item.setId(this.#itens.length);
   };
 
   remove = function (item) {
@@ -43,7 +44,7 @@ class Scene {
       var item = this.getItens()[i];
       if (item.disable) continue;
       var position = item.getPosition();
-      var coords = [];
+      let coords = {points: [], edges: [], polygonus: []};
       item.z = 0;
 
       //renderizar pontos
@@ -64,7 +65,7 @@ class Scene {
 
         if (dist <= 0) dist = 0.0001;
 
-        coords.push({
+        coords.points.push({
           x: vp.width / 2 + out.x * size / dist,
           y: vp.height / 2 + -out.y * size / dist,
           z: (out.z < 0) ? 0 : out.z,
@@ -75,7 +76,8 @@ class Scene {
       });
 
       //renderizar polygonus
-      item.getPolygonus().map(poly => {
+      item.getPolygonus().map(e => {
+        let poly = Util.cloneObject(e);
         let dir = poly.direction;
 
         var out = poly.coords = item.transform(dir.x, dir.y, dir.z);
@@ -83,12 +85,10 @@ class Scene {
           out.x,
           out.y,
           out.z);
-
+        coords.polygonus.push(poly);
       })
 
-      item.sortPolygonus((a, b) => {
-
-
+      coords.polygonus.sort((a, b) => {
 
         let ca = a.coords;
         let cb = b.coords;

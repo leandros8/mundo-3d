@@ -4,17 +4,21 @@ class Entity extends Matrix {
   static TYPELINES = 0.005;
   static TYPEPOLYGONUS = 0.009;
 
+  static decode = function(data){
+    
+  }
+
+  #id = -1;
   #points = [];
   #edges = [];
   #polygonus = [];
-  #coords = [];
+  #coords = {points: [], edges: [], polygonus: []};
   #name = "";
-  #id = -1;
   #style = {
     color: [160, 160, 160],
     size: 15,
     type: Entity.TYPEPOLYGONUS,
-    twoSides: false,
+    twoSides: true,
     shine: 1
   }
 
