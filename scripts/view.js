@@ -70,7 +70,7 @@ class View {
             return {
               type: Entity.TYPEPOLYGONUS,
               entity: item,
-              ind: j
+              ind: poly.id
             }
           };
         }

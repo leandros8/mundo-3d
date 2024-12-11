@@ -43,6 +43,10 @@ class Matrix {
     this.#lookat.z += z;
   }
 
+  resetData = function(){
+    this.#data = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+  }
+
   setScale = function(x, y, z) {
     this.#scale.x = x;
     this.#scale.y = y;

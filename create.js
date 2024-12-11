@@ -27,13 +27,82 @@ scene.addItem(cube, -4, 0, 0);
 var item = new Entity();
 item.setPoints([{ x: 0, y: 0, z: 0 }]);
 item.setStyle({ color: [160, 0, 160], size: 20, type: Entity.TYPEPOINTS, twoSides: true, shine: 1 });
-scene.addItem(item, 0, 0, 0);
+//scene.addItem(item, 0, 0, 0);
 
 class create {
 
   item;
 
+  #refresh_detals = function(ctx){
+    $('.list').hide(); 
+    $('.detals').show();
+    $('div.type label').removeClass('active');
+    $('div.type #det').addClass('active');
+    
+    var s = ctx.item.getStyle();
+    var color = $('#style-color');
+    var c = s.color;
+    var hex = '#';
+    c.map(e => { hex += (e < 16 ? '0' : '') + e.toString(16); });
+    color.val(hex);
+    color.change(() => {
+      var v = color.val();
+      var r = [parseInt(v.substr(1, 2), 16), parseInt(v.substr(3, 2), 16), parseInt(v.substr(5, 2), 16)];
+      var s = ctx.item.getStyle();
+      ctx.item.setStyle({ color: r, size: s.size, type: s.type, twoSides: s.twoSides, shine: s.shine });
+    });
+
+    var size = $('#style-size');
+    size.val(s.size);
+    size.change(() => {
+      var s = ctx.item.getStyle();
+      ctx.item.setStyle({ color: s.color, size: size.val(), type: s.type, twoSides: s.twoSides, shine: s.shine });
+    });
+
+    var type = $('#style-type');
+    type.val(s.type);
+    type.change(() => {
+      var s = ctx.item.getStyle();
+      ctx.item.setStyle({ color: s.color, size: s.size, type: type.val(), twoSides: s.twoSides, shine: s.shine });
+    });
+
+    var shine = $('#style-shine');
+    shine.val(s.shine);
+    shine.change(() => {
+      var s = ctx.item.getStyle();
+      ctx.item.setStyle({ color: s.color, size: s.size, type: s.type, twoSides: s.twoSides, shine: shine.val() });
+    });
+
+    let p = ctx.item.getPosition();
+    $('#p-x').val(p.x).change(() => { p.x = parseFloat($('#p-x').val())});
+    $('#p-y').val(p.y).change(() => { p.y = parseFloat($('#p-y').val())});
+    $('#p-z').val(p.z).change(() => { p.z = parseFloat($('#p-z').val())});
+
+    let rot = function(){
+      let x = parseFloat($('#r-x').val());
+      let y = parseFloat($('#r-y').val());
+      let z = parseFloat($('#r-z').val());
+      ctx.item.resetData();
+      ctx.item.rotate(x, y, z);
+    }
+    
+    var r = ctx.item.getLookat();
+    $('#r-x').val(r.x).change(rot);
+    $('#r-y').val(r.y).change(rot);
+    $('#r-z').val(r.y).change(rot);
+
+    var sca = ctx.item.getSize();
+    $('#s-x').val(sca.x).change(() => { ctx.item.setScale(parseInt($('#s-x').val()), sca.y, sca.z) });
+    $('#s-y').val(sca.y).change(() => { ctx.item.setScale(sca.x, parseInt($('#s-y').val()), sca.z) });
+    $('#s-z').val(sca.y).change(() => { ctx.item.setScale(sca.x, sca.y, parseInt($('#s-z').val())) });
+}
+
   #refresh_points = function (ctx, id) {
+    $('.list').hide(); 
+    $('.points-list').show();
+    $('div.type label').removeClass('active');
+    $('div.type #poi').addClass('active');
+
     let html_list = '';
     let points = ctx.item.getPoints();
     for (var i = 0; i < points.length; ++i) {
@@ -56,9 +125,9 @@ class create {
     $('.points-detals .detal-title').html('Ponto ' + id);
 
     let p = points[id];
-    $('.point-position label input[name="x"]').off().val(p.x).change((e) => { p.x = $(e.target).val(); this.#refresh_points(ctx, id) });
-    $('.point-position label input[name="y"]').off().val(p.y).change((e) => { p.y = $(e.target).val(); this.#refresh_points(ctx, id) });
-    $('.point-position label input[name="z"]').off().val(p.z).change((e) => { p.z = $(e.target).val(); this.#refresh_points(ctx, id) });
+    $('.point-position label input[name="x"]').off().val(p.x).change((e) => { p.x = parseFloat($(e.target).val()); this.#refresh_points(ctx, id) });
+    $('.point-position label input[name="y"]').off().val(p.y).change((e) => { p.y = parseFloat($(e.target).val()); this.#refresh_points(ctx, id) });
+    $('.point-position label input[name="z"]').off().val(p.z).change((e) => { p.z = parseFloat($(e.target).val()); this.#refresh_points(ctx, id) });
 
     $('.points-list ul li').off().click((e => { ctx.#refresh_points(ctx, e.currentTarget.id) }));
 
@@ -72,6 +141,10 @@ class create {
   }
 
   #refresh_edges = function (ctx, id) {
+    $('.list').hide(); 
+    $('.edges-list').show();
+    $('div.type label').removeClass('active');
+    $('div.type #edg').addClass('active');
     let html_list = '';
     let edges = ctx.item.getEdges();
     for (var i = 0; i < edges.length; ++i) {
@@ -111,6 +184,11 @@ class create {
   }
 
   #refresh_polygonus = function (ctx, id) {
+    $('.list').hide(); 
+    $('.polygonus-list').show();
+    $('div.type label').removeClass('active');
+    $('div.type #pol').addClass('active');
+
     let html_list = '';
     let polys = ctx.item.getPolygonus();
     for (var i = 0; i < polys.length; ++i) {
@@ -152,89 +230,47 @@ class create {
     });
   }
 
+  #click_item = function(ctx, x, y){
+    let result = view.getClick(x, y);
+    if(result == null)return;
+
+    if(result.type == Entity.TYPEPOINTS){
+      this.#refresh_points(ctx, result.ind);
+    }else if(result.type == Entity.TYPELINES){
+      this.#refresh_edges(ctx, result.ind);
+    }else if(result.type == Entity.TYPEPOLYGONUS){
+      this.#refresh_polygonus(ctx, result.ind);
+    }
+  }
+
   init = function () {
+    //abrir e fechar slide
+    $('.open-close-slide').click(e => {
+      $('.open-close-slide').toggleClass('open');
+    });
+
     //titulo
     $('.slide .link').html(this.item.getId());
     $('.slide .name').html(this.item.getName());
 
     //tipo de visualização
-    $('div.type label input').change((e) => {
-      var ind = $('div.type label input:checked');
-      $('.list').hide(); $('.detals').hide();
-      $('div.type label').removeClass('active');
-      ind.parent().addClass('active');
-
-      switch (ind.val()) {
-        case '1':
-          $('.detals').show();
+    $('div.type label').click((e) => {
+      let ind = e.target.id;
+      switch (ind) {
+        case 'det':
+          this.#refresh_detals(this);
           break;
-        case '2':
-          $('div.points-list').show();
+        case 'poi':
           this.#refresh_points(this);
           break;
-        case '3':
-          $('.edges-list').show();
+        case 'edg':
           this.#refresh_edges(this);
           break;
-        case '4':
-          $('.polygonus-list').show();
+        case 'pol':
           this.#refresh_polygonus(this);
           break;
       }
-
     });
-
-    /*montar detalhes*/{
-      var s = this.item.getStyle();
-      var color = $('#style-color');
-      var c = s.color;
-      var hex = '#';
-      c.map(e => { hex += (e < 16 ? '0' : '') + e.toString(16); });
-      color.val(hex);
-      color.change(() => {
-        var v = color.val();
-        var r = [parseInt(v.substr(1, 2), 16), parseInt(v.substr(3, 2), 16), parseInt(v.substr(5, 2), 16)];
-        var s = this.item.getStyle();
-        this.item.setStyle({ color: r, size: s.size, type: s.type, twoSides: s.twoSides, shine: s.shine });
-      });
-
-      var size = $('#style-size');
-      size.val(s.size);
-      size.change(() => {
-        var s = this.item.getStyle();
-        this.item.setStyle({ color: s.color, size: size.val(), type: s.type, twoSides: s.twoSides, shine: s.shine });
-      });
-
-      var type = $('#style-type');
-      type.val(s.type);
-      type.change(() => {
-        var s = this.item.getStyle();
-        this.item.setStyle({ color: s.color, size: s.size, type: type.val(), twoSides: s.twoSides, shine: s.shine });
-      });
-
-      var shine = $('#style-shine');
-      shine.val(s.shine);
-      shine.change(() => {
-        var s = this.item.getStyle();
-        this.item.setStyle({ color: s.color, size: s.size, type: s.type, twoSides: s.twoSides, shine: shine.val() });
-      });
-
-      var p = this.item.getPosition();
-      $('#p-x').val(p.x).change(() => { this.item.setPosition(parseInt($('#p-x').val()), p.y, p.z) });
-      $('#p-y').val(p.y).change(() => { this.item.setPosition(p.x, parseInt($('#p-y').val()), p.z) });
-      $('#p-z').val(p.y).change(() => { this.item.setPosition(p.x, p.y, parseInt($('#p-z').val())) });
-
-
-      var r = this.item.getLookat();
-      $('#r-x').val(r.x).change(() => { this.item.rotate(parseInt($('#r-x').val()), r.y, r.z) });
-      $('#r-y').val(r.y).change(() => { this.item.rotate(r.x, parseInt($('#r-y').val()), r.z) });
-      $('#r-z').val(r.y).change(() => { this.item.rotate(r.x, r.y, parseInt($('#r-z').val())) });
-
-      var sca = this.item.getSize();
-      $('#s-x').val(sca.x).change(() => { this.item.setScale(parseInt($('#s-x').val()), sca.y, sca.z) });
-      $('#s-y').val(sca.y).change(() => { this.item.setScale(sca.x, parseInt($('#s-y').val()), sca.z) });
-      $('#s-z').val(sca.y).change(() => { this.item.setScale(sca.x, sca.y, parseInt($('#s-z').val())) });
-    }
 
     $('.points-list button.add').click((() => {
       let list = this.item.getPoints();
@@ -255,6 +291,8 @@ class create {
       this.#refresh_polygonus(this);
     }));
 
+    $('#canvas').click(e => this.#click_item(this, e.clientX, e.clientY));
+
   }
 }
 
@@ -270,7 +308,7 @@ view.frameAnimation(() => {
   var rot = control.rotate;
   scene.getCamera().translate(trans.x * 0.5, trans.y * 0.5, trans.z * 0.5);
   scene.getCamera().rotate(rot.x * 0.1, rot.y * 0.1, rot.z * 0.1);*/
-  cube.rotate(0, 0.07, 0);
+  //cube.rotate(0, 0.07, 0);
   scene.render();
   view.render();
   //view.stopAnimation();
@@ -278,7 +316,5 @@ view.frameAnimation(() => {
   /*let pos = scene.getCamera().getPosition();
   control.toast("x: " + Math.round(pos.x) + ", y: " + Math.round(pos.y) + ", z: " +  Math.round(pos.z));*/
 });
-
-
 
 //$('.refresh').click();

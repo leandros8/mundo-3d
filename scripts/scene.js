@@ -76,15 +76,13 @@ class Scene {
       });
 
       //renderizar polygonus
-      item.getPolygonus().map(e => {
+      item.getPolygonus().map((e, l) => {
         let poly = Util.cloneObject(e);
         let dir = poly.direction;
+        poly.id = l;
 
         var out = poly.coords = item.transform(dir.x, dir.y, dir.z);
-        poly.wordCoords = this.getCamera().transform(
-          out.x,
-          out.y,
-          out.z);
+        poly.wordCoords = this.getCamera().transform(out.x, out.y, out.z);
         coords.polygonus.push(poly);
       })
 
