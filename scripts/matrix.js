@@ -10,10 +10,17 @@ class Matrix {
     if (lookat) this.#lookat = lookat;
   }
 
-  translate = function(x, y, z) {
+  /*translate = function(x, y, z) {
     this.#position.x += x;
     this.#position.y += y;
     this.#position.z += z;
+  }*/
+
+translate = function(x, y, z) {
+    let m = this.#data.slice();
+    this.#position.x = m[0] * x + m[3] * y + m[6] * z + this.#position.x;
+    this.#position.y = m[1] * x + m[4] * y + m[7] * z + this.#position.y;
+    this.#position.z = m[2] * x + m[5] * y + m[8] * z + this.#position.z;
   }
 
   rotate = function(x, y, z) {

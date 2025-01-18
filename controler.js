@@ -417,9 +417,15 @@ class Control {
       var ind = retorno.ind;
       let pos = item.getPosition();
       let poly = item.getPolygonus()[ind];
-      
 
-      let coords = poly.coords;
+      let coords = null;
+      let cpolys = item.getCoords().polygonus;
+      for(var i = 0;i < cpolys.length;++i){
+        var c = cpolys[i];
+        if(c.id != ind)continue;
+        coords = c.coords;
+      }
+      
       let x = coords.x, y = coords.y, z = coords.z;
 
       let obj = new Textures.createCube();
