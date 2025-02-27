@@ -18,7 +18,8 @@ view.setCanvas(canvas);
 control.init();
 
 //Definir objetos
-var cube = Textures.createCube();/*
+var cube = Textures.createCube();
+cube.setScale(1, 1, 4);/*
 var pyramid = Textures.createPyramid();
 var plane = Textures.createPlane(1, 1);
 var sofa = Itens_Textures.createSofa();
@@ -74,7 +75,7 @@ view.frameAnimation(() => {
   control.lookat = scene.getCamera().getLookat();
   var trans = control.translate;
   var rot = control.rotate;
-  scene.getCamera().translate(trans.x * 0.1, trans.y * 0.1, trans.z * 0.5);
+  scene.getCamera().translate(trans.x * 0.1, trans.y * 0.1, trans.z * 0.1);
   scene.getCamera().rotate(rot.x * 0.1, rot.y * 0.1, rot.z * 0.1);
   //cube.rotate(0, 0.007, 0);
   scene.render();
