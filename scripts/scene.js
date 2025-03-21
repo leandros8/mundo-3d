@@ -16,6 +16,21 @@ class Scene {
     return this.#itens;
   }
 
+  getItem = function (x, y, z) {
+    let out;
+    this.getItens().map(e => {
+      let pos = e.getPosition();
+      if (pos.x == x && pos.y == y && pos.z == z) out = e;
+    });
+    return out;
+  }
+
+  getItemId = function (id) {
+    let out;
+    this.getItens().map(e => {if (e.getId() == id) out = e});
+    return out;
+  }
+
   addItem = function (item, x, y, z) {
     if (x != null && y != null && z != null) item.setPosition(x, y, z);
     this.#itens.push(item);
@@ -48,23 +63,14 @@ class Scene {
       let coords = { points: [], edges: [], polygonus: [] };
       item.z = 0;
 
-      let t = window.teste = item.teste = {
-        x: position.x - cposition.x,
-        y: position.y - cposition.y,
-        z: position.z - cposition.z};
-      window.sql = item.sql = Math.sqrt(t.x*t.x + t.y * t.y);
-
-      item.math_dist = new Matrix();
-      let rad = 0.5;
-      let x = Math.max(Math.min((position.x - cposition.x), rad), -rad);
-      let y = Math.max(Math.min((position.y - cposition.y), rad), -rad);
-      item.math_dist.rotate(y * 0.001, x * 0.001, 0);
+      //gerar sqrt para sort itens
+      let e = this.getCamera().transform(position.x - cposition.x, position.y - cposition.y, position.z - cposition.z);
+      item.sqrt = Math.sqrt(e.x * e.x + e.y * e.y + e.z * e.z);
 
       //renderizar pontos
       item.getPoints().map(point => {
 
-        let out = item.math_dist.transform(point.x, point.y, point.z);
-        out = item.transform(out.x, out.y, out.z);
+        let out = item.transform(point.x, point.y, point.z);
         out = this.getCamera().transform(
           position.x + out.x - cposition.x,
           position.y + out.y - cposition.y,
@@ -74,7 +80,7 @@ class Scene {
         var size = (vp.width + vp.height) * 0.06;
 
         if (dist <= 0) dist = 0.0001;
-        //dist = 2;
+
         coords.points.push({
           x: vp.width / 2 + out.x * size / dist,
           y: vp.height / 2 + -out.y * size / dist,
@@ -90,31 +96,29 @@ class Scene {
         let poly = Util.cloneObject(e);
         let dir = poly.direction;
         poly.id = l;
+        var out = poly.coords = item.transform(dir.x, dir.y, dir.z);
 
-        let md = item.math_dist.transform(dir.x, dir.y, dir.z);
-        var out = poly.coords = item.transform(md.x, md.y, md.z);
+        //gerar sqrt para sort itens
+        let h = this.getCamera().transform(position.x + out.x - cposition.x, position.y + out.y - cposition.y, position.z + out.z - cposition.z);
+        poly.sqrt = Math.sqrt(h.x * h.x + h.y * h.y + h.z * h.z);
+
         poly.wordCoords = this.getCamera().transform(out.x, out.y, out.z);
         coords.polygonus.push(poly);
       })
 
+      //sort polygonus
       coords.polygonus.sort((a, b) => {
-        let ca = a.wordCoords;
-        let cb = b.wordCoords;
-        return (ca.z > cb.z) ? -1 : 1;
+        return (a.sqrt > b.sqrt) ? -1 : 1;
       });
 
       item.setCoords(coords);
     }
 
+    //sort itens
     this.getItens().sort((a, b) => {
-
-      return (a.sql < b.sql ? 1 : -1);
+      return (a.sqrt < b.sqrt ? 1 : -1);
     })
-
 
   };
 
 }
-
-
-//Math.sqrt(2*2 + 2*2 + 2*2);

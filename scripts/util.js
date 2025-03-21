@@ -1,7 +1,7 @@
 
 const Util = {
 
-  cloneObject: function(object) {
+  cloneObject: function (object) {
     if (object == null) return null;
 
     if (object instanceof Array) {
@@ -40,7 +40,7 @@ const Util = {
 
 const Textures = {
 
-  createCube: function() {
+  createCube: function () {
     var item = new Entity();
     item.setName("Cube");
     item.setPoints([{ x: -1, y: 1, z: 1 }, { x: 1, y: 1, z: 1 }, { x: 1, y: -1, z: 1 }, { x: -1, y: -1, z: 1 }, { x: -1, y: 1, z: -1 }, { x: 1, y: 1, z: -1 }, { x: 1, y: -1, z: -1 }, { x: -1, y: -1, z: -1 }]);
@@ -49,7 +49,7 @@ const Textures = {
     return item;
   },
 
-  createPyramid: function() {
+  createPyramid: function () {
     var item = new Entity();
     item.setName("Pyramid");
     item.setPoints([{ x: 0, y: 1, z: 0 }, { x: -1, y: -1, z: 1 }, { x: 1, y: -1, z: 1 }, { x: 1, y: -1, z: -1 }, { x: -1, y: -1, z: -1 }]);
@@ -58,7 +58,7 @@ const Textures = {
     return item;
   },
 
-  createPlane: function(w, h) {
+  createPlane: function (w, h) {
     var item = new Entity();
     item.setName("Plane");
 
@@ -82,7 +82,7 @@ const Textures = {
     item.setPoints(points);
     item.setEdges(edges);
     item.setPolygonus(polygonus);
-    
+
     return item;
   },
 
