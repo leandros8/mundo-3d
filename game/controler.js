@@ -8,6 +8,7 @@ class Control {
   #retur = null;
   #pause = false;
   #scene = null;
+  #texture_config = { w: 3, h: 4, uvs: [[1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 5]] }
 
   rotate = { x: 0, y: 0, z: 0 };
   translate = { x: 0, y: 0, z: 0 };
@@ -17,42 +18,18 @@ class Control {
 
   itens_scene = [];
 
-  game_senttings = { itens: [], showcase: [], camera: null };
+  game_senttings = { itens: [], showcase: [25], camera: null };
 
   itens_available = [
-    [0, 0, 0],
-    [0, 0, 255],
-    [0, 0, 0],
-    [255, 0, 0],
-    [0, 0, 0],
-    [0, 180, 255],
-    [0, 0, 0],
-    [0, 255, 0],
-    [0, 0, 0],
-    [0, 0, 255],
-    [0, 0, 0],
-    [255, 0, 0],
-    [0, 0, 0],
-    [0, 180, 255],
-    [0, 0, 0],
-    [0, 255, 0],
-    [0, 0, 0],
-    [0, 0, 255],
-    [0, 0, 0],
-    [255, 0, 0],
-    [0, 0, 0],
-    [0, 180, 255],
-    [0, 0, 0],
-    [0, 255, 0],
-    [0, 0, 0],
-    [0, 0, 255],
-    [0, 0, 0],
-    [255, 0, 0],
-    [0, 0, 0],
-    [0, 180, 255],
-    [0, 0, 0],
-    [0, 255, 0],
-
+    { type: "color", data: [0, 180, 255] },
+    { type: 'texture', src: "/game/textures/TNT-block.jpeg", icon:  "/game/textures/TNT-ic.png"},
+    { type: "color", data: [0, 180, 255] },
+    { type: 'texture', src: "/game/textures/TNT-block.jpeg", icon:  "/game/textures/TNT-ic.png" },
+    { type: "color", data: [0, 180, 255] },
+    { type: "color", data: [0, 180, 255] },
+    { type: "color", data: [0, 180, 255] },
+    { type: "color", data: [0, 180, 255] },
+    { type: "color", data: [0, 180, 255] },
   ];
 
   setScene = function (scene) {
@@ -99,9 +76,16 @@ class Control {
     })
 
     this.game_senttings.itens.map(e => {
-      let obj = new Textures.createCube()
-      let color = this.itens_available[e.id];
-      obj.getStyle().color = color;
+
+      let obj;
+      let aval = this.itens_available[e.id];
+      if (aval.type == 'texture') {
+        obj = this.#texture_cube(aval.src);
+      } else {
+        obj = new Textures.createCube();
+        obj.getStyle().color = aval.data;
+      }
+
       this.#scene.addItem(obj, e.x, e.y, e.z);
     })
 
@@ -173,11 +157,20 @@ class Control {
       },
       drop: (ev) => {
         ev.preventDefault();
-        var id = ev.originalEvent.dataTransfer.getData("item");
-        let item = this.itens_available[id];
+
         let i = ev.currentTarget.id;
+        var id = ev.originalEvent.dataTransfer.getData("item");
         this.game_senttings.showcase[i] = id;
-        $('.itens-list .item-' + i + ' span').css('background', 'rgb(' + item + ')');
+
+        let item = this.itens_available[id];
+
+        if (item.type == 'texture')
+          $('.itens-list .item-' + i + ' span').attr('style', `background-image: url(${item.icon})`);
+        else
+          $('.itens-list .item-' + i + ' span').css('background', 'rgb(' + item.data + ')');
+
+
+
         this.#save();
       }
     })
@@ -213,50 +206,57 @@ class Control {
 
 
 
-
-
-
-
-
-
-
-  let mov = $(".move");
-  let point = $(".move .pointer")
-
-  let t = mov.offset().top;
-  let l = mov.offset().left;
-
-  let w = mov.width();
-  let h = mov.height();
-
-  let r = l + w; 
-  let b = t + h;
-
-  let start = false;
-  let callback = function(e){
-    if(e.type == "mousedown")start = true;
-    else if(e.type == "mouseup"){start = false; return};
-
-    let px = e.clientX;
-    let py = e.clientY;
-
-    console.log(px - l);
-
-    if(start)point.css({
-      left: Math.min(Math.max(px - l, 0), w),
-      top: Math.min(Math.max(py - t, 0), h),
-    });
-
-  }
-
-  mov.on({
-    mousedown: callback,
-    mousemove: callback
-  });
-
-  console.log();
-
-
+    /*
+    
+    
+        let mov = $(".move"); window.mov = mov;
+        let point = $(".move .pointer")
+    
+        let t = mov.offset().top;
+        let l = mov.offset().left;
+    
+        let w = mov.width();
+        let h = mov.height();
+    
+        let start = false;
+    
+        let rot = this.rotate;
+        let move = function (e) {
+          if (!start) return;
+          let px = e.clientX;
+          let py = e.clientY;
+    
+          rot.y = (px - l - w/2) / (w/2) / 10;
+          rot.x = -(py - t - h/2) / (h/2) / 10;
+    
+          point.css({
+            left: Math.min(Math.max(px - l, 0), w),
+            top: Math.min(Math.max(py - t, 0), h),
+          });
+        }
+    
+        mov.on({
+          mousedown: e => {
+            start = true;
+            move(e);
+          },
+    
+          mouseup: () => {
+            start = false;
+            point.css({ left: "50%", top: "50%" });
+            rot.x = 0;
+            rot.y = 0;
+          },
+    
+          mousemove: move,
+    
+          mouseleave: e => {
+            start = false;
+            point.css({ left: "50%", top: "50%" });
+          }
+        });
+    
+    */
 
 
 
@@ -277,28 +277,34 @@ class Control {
     let itens_list = $('.itens-list');
     for (let i = 0; i < 9; i++) {
       let c = this.game_senttings.showcase[i];
-      let color = this.itens_available[c];
-      if (color == null) color = 'transparent';
-      else color = (`rgb(${color})`);
+      let aval = this.itens_available[c];
 
-      itens_list.append($('<label/>').attr('id', i).addClass('item item-' + i)
-        .html(`<input type="radio" name="rad" value="${i}"/><span style="background:${color};"></span>`));
-      //.html(`<input type="radio" name="rad"/><span style="background-image:url('game/textures/TNT-block.jpeg');"></span>`));
+      let label = $('<label/>').attr('id', i).addClass('item item-' + i);
+      if (aval && aval.type == 'color')
+        label.html(`<input type="radio" name="rad" value="${i}"/><span style="background:rgb(${aval.data});"></span>`);
+      else if (aval && aval.type == 'texture')
+        label.html(`<input type="radio" name="rad"/><span style="background-image:url('${aval.icon}');"></span>`);
+      else label.html(`<input type="radio" name="rad" value="${i}"/><span style="background:transparent;"></span>`);
+
+      itens_list.append(label);
+
     }
 
     itens_list.append($('<label/>').addClass('item other').html('<i class="bi bi-three-dots"></i>'));
 
     let modal_list = $('.modal-list');
     this.itens_available.map((e, i) => {
-      let color = (`rgb(${e})`);
-      modal_list.append($('<div/>').addClass('modal-item')
-        .html(`<span draggable="true" id="${i}" style="background:${color};"></span>`));
-      //.html(`<span style="background-image:url('images/terra_lado.png');"></span>`));
+
+      let div = $('<div/>').addClass('modal-item');
+
+      if (e.type == 'texture') div.html(`<span draggable="true" id="${i}" style="background-image:url('${e.icon}');"></span>`);
+      else div.html(`<span draggable="true" id="${i}" style="background:rgb(${e.data});"></span>`);
+
+      modal_list.append(div);
     })
 
     // mobile touchpad
     //<div class="move-full">
-
 
   }
 
@@ -450,7 +456,7 @@ class Control {
       this.#save();*/
 
       //this.#move_event = setTimeout(() => {
-        //this.rotate = { x: 0, y: 0, z: 0 };
+      //this.rotate = { x: 0, y: 0, z: 0 };
       //}, 1000 / 20);
 
     }
@@ -499,13 +505,20 @@ class Control {
 
       let x = coords.x, y = coords.y, z = coords.z;
 
-      let obj = new Textures.createCube();
+      let obj;
 
-      let id = $('input[name="rad"]:checked').val();
+      let id = $('input[name="rad"]:checked').parent().attr('id');
       let d = this.game_senttings.showcase[id];
-      let color = this.itens_available[d];
-      if (color == null) return;
-      obj.getStyle().color = color;
+      let aval = this.itens_available[d];
+
+      if (!aval) return;
+
+      if (aval.type == 'texture') {
+        obj = this.#texture_cube(aval.src);
+      } else {
+        obj = new Textures.createCube();
+        obj.getStyle().color = aval.data;
+      }
 
       let p = { x: (pos.x + x * 2), y: (pos.y + y * 2), z: (pos.z + z * 2) };
 
@@ -513,6 +526,19 @@ class Control {
       this.game_senttings.itens.push({ id: d, x: p.x, y: p.y, z: p.z });
       this.#save();
     }
+  }
+
+  #texture_cube(src) {
+    let obj = new Textures.createCube();
+    let s = this.#texture_config, u = s.uvs;
+    obj.texture = { src: src, w: s.w, h: s.h };
+    obj.getPolygonus()[0].texture_uv = u[0];
+    obj.getPolygonus()[1].texture_uv = u[1];
+    obj.getPolygonus()[2].texture_uv = u[2];
+    obj.getPolygonus()[3].texture_uv = u[3];
+    obj.getPolygonus()[4].texture_uv = u[4];
+    obj.getPolygonus()[5].texture_uv = u[5];
+    return obj;
   }
 
   #full = function () {
@@ -550,72 +576,72 @@ class Control {
 
 
 
-        //eixo invertido
-    //eixo padrao
+  //eixo invertido
+  //eixo padrao
 
-    //continuo 
-    //com pausa
+  //continuo 
+  //com pausa
 
-//Adicionar Controle mobile
+  //Adicionar Controle mobile
 
-/*
-
-//touchpad mobile controller
-var size = (canvas.width + canvas.height) * 0.08;
-
-/*
+  /*
+  
+  //touchpad mobile controller
+  var size = (canvas.width + canvas.height) * 0.08;
+  
+  /*
+        
+        var div2 = $("<div/>").css({
+          width: size,
+          height: size,
+          left: 10,
+          bottom: 10,
+          border: "2px solid green",
+          position: "absolute",
+          "border-radius": "10px"
+        }).on({
+          touchmove: function (t) {
+            var touch = t.touches[0];
+            var ofset = div2.position();
+            var x = ((touch.clientX - ofset.left - (size / 2)) / (size / 2));
+            var y = ((touch.clientY - ofset.top - (size / 2)) / (size / 2));
+            x = (x < -1) ? -1 : (x > 1) ? 1 : x;
+            y = (y < -1) ? -1 : (y > 1) ? 1 : y;
+            var c = Math.cos(lookaat.y),
+              s = Math.sin(looakat.y);
+            control.translate = { x: x * c + y * -s, y: 0, z: x * -s + y * -c };
+          },
+          touchend: function () {
+            control.translate = { x: 0, y: 0, z: 0 };
+          }
+        });
+        $("body").append(div2);
       
-      var div2 = $("<div/>").css({
-        width: size,
-        height: size,
-        left: 10,
-        bottom: 10,
-        border: "2px solid green",
-        position: "absolute",
-        "border-radius": "10px"
-      }).on({
-        touchmove: function (t) {
-          var touch = t.touches[0];
-          var ofset = div2.position();
-          var x = ((touch.clientX - ofset.left - (size / 2)) / (size / 2));
-          var y = ((touch.clientY - ofset.top - (size / 2)) / (size / 2));
-          x = (x < -1) ? -1 : (x > 1) ? 1 : x;
-          y = (y < -1) ? -1 : (y > 1) ? 1 : y;
-          var c = Math.cos(lookaat.y),
-            s = Math.sin(looakat.y);
-          control.translate = { x: x * c + y * -s, y: 0, z: x * -s + y * -c };
-        },
-        touchend: function () {
-          control.translate = { x: 0, y: 0, z: 0 };
-        }
-      });
-      $("body").append(div2);
-    
-      var div3 = $("<div/>").css({
-        width: size / 2,
-        height: size,
-        right: 10,
-        bottom: 10,
-        border: "2px solid green",
-        position: "absolute",
-        "border-radius": "10px"
-      }).on({
-        touchmove: function (t) {
-          var touch = t.touches[0];
-          var ofset = div3.position();
-          var y = ((touch.clientY - ofset.top - (size / 2)) / (size / 2));
-          y = (y < -1) ? -1 : (y > 1) ? 1 : y;
-          control.translate.y = -y;
-        },
-        touchend: function () {
-          control.translate.y = 0;
-        }
-      });
-      $("body").append(div3);
-    
-    };
-
-    */
+        var div3 = $("<div/>").css({
+          width: size / 2,
+          height: size,
+          right: 10,
+          bottom: 10,
+          border: "2px solid green",
+          position: "absolute",
+          "border-radius": "10px"
+        }).on({
+          touchmove: function (t) {
+            var touch = t.touches[0];
+            var ofset = div3.position();
+            var y = ((touch.clientY - ofset.top - (size / 2)) / (size / 2));
+            y = (y < -1) ? -1 : (y > 1) ? 1 : y;
+            control.translate.y = -y;
+          },
+          touchend: function () {
+            control.translate.y = 0;
+          }
+        });
+        $("body").append(div3);
+      
+      };
+  
+      */
 
 
 }

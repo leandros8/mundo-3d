@@ -43,6 +43,8 @@
   cube3.getPolygonus()[4].texture_uv = [1, 1];
   cube3.getPolygonus()[5].texture_uv = [1, 3];
 
+  a = 
+
 /*Adicionar itens no layout*/
   scene.addItem(cube, 0, -2, 20).addItem(cube2, -4, -2, 20).addItem(cube3, 4, -2, 20);
 

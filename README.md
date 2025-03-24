@@ -8,8 +8,6 @@ aplicação web de matriz 3d de objetos
 
 Corrigir move rotate com mouse
 Criar sistema mobile
-
-Items disponivel com texture
 baixar mais texture minecraft
 
 * [ ] Criar sistema de criar objetos
