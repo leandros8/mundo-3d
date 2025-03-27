@@ -8,7 +8,7 @@ class Control {
   #retur = null;
   #pause = false;
   #scene = null;
-  #texture_config = { w: 3, h: 4, uvs: [[1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 5]] }
+  #texture_config = { w: 3, h: 4, uvs: [[1, 0], [2, 1], [1, 2], [0, 1], [1, 1], [1, 3]] }
 
   rotate = { x: 0, y: 0, z: 0 };
   translate = { x: 0, y: 0, z: 0 };
@@ -21,10 +21,18 @@ class Control {
   game_senttings = { itens: [], showcase: [25], camera: null };
 
   itens_available = [
-    { type: "color", data: [0, 180, 255] },
-    { type: 'texture', src: "/game/textures/TNT-block.jpeg", icon:  "/game/textures/TNT-ic.png"},
-    { type: "color", data: [0, 180, 255] },
-    { type: 'texture', src: "/game/textures/TNT-block.jpeg", icon:  "/game/textures/TNT-ic.png" },
+    { type: 'texture', src: "/game/textures/01.jpeg", icon: "/game/textures/01.jpeg" },
+    { type: 'texture', src: "/game/textures/02.jpeg", icon: "/game/textures/02.jpeg" },
+    { type: 'texture', src: "/game/textures/03.jpeg", icon: "/game/textures/03.jpeg" },
+    { type: 'texture', src: "/game/textures/04.jpeg", icon: "/game/textures/04.jpeg" },
+    { type: 'texture', src: "/game/textures/05.jpeg", icon: "/game/textures/05.jpeg" },
+    { type: 'texture', src: "/game/textures/06.jpeg", icon: "/game/textures/06.jpeg" },
+    { type: 'texture', src: "/game/textures/07.jpeg", icon: "/game/textures/07.jpeg" },
+    { type: 'texture', src: "/game/textures/09.jpeg", icon: "/game/textures/09.jpeg" },
+    { type: 'texture', src: "/game/textures/10.jpeg", icon: "/game/textures/10.jpeg" },
+    { type: 'texture', src: "/game/textures/11.jpeg", icon: "/game/textures/11.jpeg" },
+    { type: 'texture', src: "/game/textures/13.jpeg", icon: "/game/textures/13.jpeg" },
+    { type: 'texture', src: "/game/textures/14.jpeg", icon: "/game/textures/14.jpeg" },
     { type: "color", data: [0, 180, 255] },
     { type: "color", data: [0, 180, 255] },
     { type: "color", data: [0, 180, 255] },
@@ -395,7 +403,7 @@ class Control {
         this.#scene.remove(item);
         let pos = item.getPosition();
         let gs = this.game_senttings;
-        this.gs.itens = gs.itens.filter(a => !(a.x == pos.x && a.y == pos.y && a.z == pos.z));
+        this.game_senttings.itens = gs.itens.filter(a => !(a.x == pos.x && a.y == pos.y && a.z == pos.z));
         this.#save();
 
       }, 1000);

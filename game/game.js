@@ -35,15 +35,13 @@
   cube2.getPolygonus()[0].color = [0, 0, 255];
   cube3.setStyle({ color: [180, 180, 180], size: 10, type: Entity.TYPEPOLYGONUS, twoSides: true, shine: 0.9 });
   cube3.setName('Bloco TNT');
-  cube3.texture = { src: "/game/textures/TNT-block.jpeg", w: 3, h: 4 };
+  cube3.texture = { src: "/game/textures/01.jpeg", w: 3, h: 4 };
   cube3.getPolygonus()[0].texture_uv = [1, 2];
   cube3.getPolygonus()[1].texture_uv = [1, 2];
   cube3.getPolygonus()[2].texture_uv = [1, 2];
   cube3.getPolygonus()[3].texture_uv = [1, 2];
   cube3.getPolygonus()[4].texture_uv = [1, 1];
-  cube3.getPolygonus()[5].texture_uv = [1, 3];
-
-  a = 
+  cube3.getPolygonus()[5].texture_uv = [1, 3];  
 
 /*Adicionar itens no layout*/
   scene.addItem(cube, 0, -2, 20).addItem(cube2, -4, -2, 20).addItem(cube3, 4, -2, 20);
