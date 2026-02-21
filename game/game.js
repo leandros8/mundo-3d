@@ -5,7 +5,7 @@
   const scene = new Scene();
   const control = new Control();
   const view = new View();
-  const baseUrl = window.location.origin;
+  const baseUrl = "https://leandros8.github.io/mundo-3d";
 
 /*Configurações do game*/
   canvas.width = width;
