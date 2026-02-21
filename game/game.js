@@ -21,6 +21,7 @@
   let cube = Textures.createCube();
   let cube2 = cube.clone();
   let cube3 = cube.clone();
+  var plane = Textures.createPlane(40, 40);
 
 /*Configurações dos objetos*/
   cube.setStyle({ color: [255, 0, 0], size: 10, type: Entity.TYPEPOLYGONUS, twoSides: true, shine: 0.9 });
@@ -43,9 +44,10 @@
   cube3.getPolygonus()[3].texture_uv = [1, 2];
   cube3.getPolygonus()[4].texture_uv = [1, 1];
   cube3.getPolygonus()[5].texture_uv = [1, 3];  
+  plane.setStyle({ color: [200, 200, 200], size: 40, type: Entity.TYPELINES, twoSides: true, shine: 1 });
 
 /*Adicionar itens no layout*/
-  scene.addItem(cube, 0, -2, 20).addItem(cube2, -4, -2, 20).addItem(cube3, 4, -2, 20);
+  scene.addItem(plane, 0, -3.3, 20).addItem(cube, 0, -2, 20).addItem(cube2, -4, -2, 20).addItem(cube3, 4, -2, 20);
 
 /*Start animação*/
   view.frameAnimation(() => {

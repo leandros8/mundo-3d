@@ -10,15 +10,15 @@ const view = new View();
 canvas.width = width;
 canvas.height = height;
 scene.setViewport({ width: width, height: height, x: 0, y: 0, z: 150 });
-scene.getCamera().setPosition(0, 10, -25);
-scene.getCamera().rotate(-0.4, 0, 0);
+scene.getCamera().setPosition(0, 9, -26);
+scene.getCamera().rotate(-0.35, 0, 0);
 view.setFPS(60);
 view.setScene(scene);
 view.setCanvas(canvas);
 //control.init();
 
 //Criação da barra slide
-$('head').append('<link rel="stylesheet" href="create.css">');
+$('head').append('<link rel="stylesheet" href="create/create.css">');
 
 var cube = Textures.createCube();
 cube.setStyle({ color: [160, 0, 160], size: 20, type: Entity.TYPEPOLYGONUS, twoSides: true, shine: 1 });
@@ -28,6 +28,10 @@ var item = new Entity();
 item.setPoints([{ x: 0, y: 0, z: 0 }]);
 item.setStyle({ color: [160, 0, 160], size: 20, type: Entity.TYPEPOINTS, twoSides: true, shine: 1 });
 //scene.addItem(item, 0, 0, 0);
+
+var cube = Textures.createPlane(40, 40);
+cube.setStyle({ color: [200, 200, 200], size: 40, type: Entity.TYPELINES, twoSides: true, shine: 1 });
+scene.addItem(cube, -3.5, -1, 6);
 
 class create {
 
@@ -246,8 +250,8 @@ class create {
   #initHtml = function(){
     $('body').append(`
         <span class="open-close-slide open">
-    <img class="o" src="images/open-slide.png">
-    <img class="c" style="display: none;" src="images/close-slide.png">
+    <img class="o" src="create/open-slide.png">
+    <img class="c" style="display: none;" src="create/close-slide.png">
   </span>
 
   <div class="slide">

@@ -272,6 +272,7 @@ class Control {
   }
 
   #initHtml = function () {
+    $('head').append('<link rel="stylesheet" href="game/control.css">');
     $('body').append($('<div/>').addClass('control')
       .html(`<form id="itens-list"><div class="itens-list"></div></form>
     <div class="modal-bg"></div><div class="modal-other"><h3>Addicionar Itens</h3>
