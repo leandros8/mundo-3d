@@ -24,18 +24,18 @@
 /*Configurações dos objetos*/
   cube.setStyle({ color: [255, 0, 0], size: 10, type: Entity.TYPEPOLYGONUS, twoSides: true, shine: 0.9 });
   cube.setName('Bloco de terra');
-  cube.getPolygonus()[0].texture = "/game/terra_lado.png";
-  cube.getPolygonus()[1].texture = "/game/terra_lado.png";
-  cube.getPolygonus()[2].texture = "/game/terra_lado.png";
-  cube.getPolygonus()[3].texture = "/game/terra_lado.png";
-  cube.getPolygonus()[4].texture = "/game/terra_cima.jpeg";
-  cube.getPolygonus()[5].texture = "/game/terra_baixo.jpg";
+  cube.getPolygonus()[0].texture = "terra_lado.png";
+  cube.getPolygonus()[1].texture = "terra_lado.png";
+  cube.getPolygonus()[2].texture = "terra_lado.png";
+  cube.getPolygonus()[3].texture = "terra_lado.png";
+  cube.getPolygonus()[4].texture = "terra_cima.jpeg";
+  cube.getPolygonus()[5].texture = "terra_baixo.jpg";
   cube2.setStyle({ color: [255, 0, 0], size: 10, type: Entity.TYPEPOLYGONUS, twoSides: true, shine: 0.9 });
   cube2.setName('Bloco colorido');
   cube2.getPolygonus()[0].color = [0, 0, 255];
   cube3.setStyle({ color: [180, 180, 180], size: 10, type: Entity.TYPEPOLYGONUS, twoSides: true, shine: 0.9 });
   cube3.setName('Bloco TNT');
-  cube3.texture = { src: "/game/textures/01.jpeg", w: 3, h: 4 };
+  cube3.texture = { src: "textures/01.jpeg", w: 3, h: 4 };
   cube3.getPolygonus()[0].texture_uv = [1, 2];
   cube3.getPolygonus()[1].texture_uv = [1, 2];
   cube3.getPolygonus()[2].texture_uv = [1, 2];
