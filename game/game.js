@@ -11,7 +11,7 @@
   canvas.width = width;
   canvas.height = height;
   scene.setViewport({ width: width, height: height, x: 0, y: 0, z: 150 });
-  view.setFPS(60);
+  view.setFPS(35);
   view.setScene(scene);
   view.setCanvas(canvas);
   control.setScene(scene);
@@ -48,7 +48,7 @@
 
 /*Adicionar itens no layout*/
   scene.addItem(plane, 0, -3.3, 20).addItem(cube, 0, -2, 20).addItem(cube2, -4, -2, 20).addItem(cube3, 4, -2, 20);
-
+//inicio = Date.now();
 /*Start animação*/
   view.frameAnimation(() => {
     let trans = control.translate;
@@ -58,12 +58,17 @@
     cube.rotate(0, -0.007, 0);
     cube2.rotate(0, 0, 0.007);
     cube3.rotate(-0.007, 0, 0);
-    scene.render();
+
+    scene.render();    
+    inicio = Date.now();
     view.render();
+    console.log(Date.now() - inicio);
     //view.stopAnimation();
     let pos = scene.getCamera().getPosition();
     control.toast("x: " + Math.round(pos.x) + ", y: " + Math.round(pos.y) + ", z: " + Math.round(pos.z));
+
   });
+
 
 /*Area de testes*/{
 
