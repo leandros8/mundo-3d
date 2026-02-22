@@ -75,12 +75,11 @@ class View {
           };
         }
 
-    }
-
+    } 
+                
   };
 
   render = function () {
-
     if(this.#scene == null)throw new Error("Scene not defined");
     if(this.#canvas == null)throw new Error("Canvas not defined");
 

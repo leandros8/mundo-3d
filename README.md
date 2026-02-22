@@ -28,6 +28,4 @@ Entity
         twoSides, color, type, size, color, shine
     
 
-
-    Renderizar view.render nativamente
-    Testar velocidade de control.getclick 2x
+    Renderizar view.render, view.click e scene.render nativamente

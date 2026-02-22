@@ -74,7 +74,6 @@ const Textures = {
         if (x > -w / 2) edges.push({ a: ind, b: ind - 1 });
         if (z < h / 2) edges.push({ a: ind, b: ind - w - 1 });
         if (x > -w / 2 && z < h / 2) polygonus.push({ vertices: [ind - w - 2, ind - w - 1, ind, ind - 1] });
-        console.log();
         ++ind;
       }
     }

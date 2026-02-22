@@ -11,7 +11,7 @@
   canvas.width = width;
   canvas.height = height;
   scene.setViewport({ width: width, height: height, x: 0, y: 0, z: 150 });
-  view.setFPS(35);
+  view.setFPS(60);
   view.setScene(scene);
   view.setCanvas(canvas);
   control.setScene(scene);
@@ -44,29 +44,25 @@
   cube3.getPolygonus()[3].texture_uv = [1, 2];
   cube3.getPolygonus()[4].texture_uv = [1, 1];
   cube3.getPolygonus()[5].texture_uv = [1, 3];  
-  plane.setStyle({ color: [200, 200, 200], size: 40, type: Entity.TYPELINES, twoSides: true, shine: 1 });
+  plane.setStyle({ color: [0, 100, 100], size: 40, type: Entity.TYPELINES, twoSides: true, shine: 0 });
 
 /*Adicionar itens no layout*/
-  scene.addItem(plane, 0, -3.3, 20).addItem(cube, 0, -2, 20).addItem(cube2, -4, -2, 20).addItem(cube3, 4, -2, 20);
+  scene.addItem(plane, 0, 0, 20).addItem(cube, 0, 1, 20).addItem(cube2, -4, 1, 20).addItem(cube3, 4, 1, 20);
 //inicio = Date.now();
 /*Start animação*/
   view.frameAnimation(() => {
-    let trans = control.translate;
+    let trans = control.translate;        
     let rotat = control.rotate;
     scene.getCamera().translate(trans.x * 0.1, trans.y * 0.1, trans.z * 0.2);
     scene.getCamera().rotate(rotat.x * 0.1, rotat.y * 0.1, rotat.z * 0.1);
     cube.rotate(0, -0.007, 0);
     cube2.rotate(0, 0, 0.007);
     cube3.rotate(-0.007, 0, 0);
-
-    scene.render();    
-    inicio = Date.now();
+    scene.render();
     view.render();
-    console.log(Date.now() - inicio);
     //view.stopAnimation();
     let pos = scene.getCamera().getPosition();
     control.toast("x: " + Math.round(pos.x) + ", y: " + Math.round(pos.y) + ", z: " + Math.round(pos.z));
-
   });
 
 
